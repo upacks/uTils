@@ -3,7 +3,7 @@ import blocked from 'blocked'
 import lodashi from "lodash"
 import { v4 as uuidv4 } from 'uuid'
 
-import { log } from './log'
+import { log as logi } from './log'
 
 export const isNode = typeof process === 'object'
 export const env = isNode ? process.env || {} : {}
@@ -11,6 +11,7 @@ export const isProd = env.NODE_ENV === 'production'
 export const isDev = env.NODE_ENV === 'development'
 export const dateFormat = "YYYY-MM-DD HH:mm:ss.SSS"
 export const lodash = lodashi
+export const log = logi
 
 export const Jfy = (e: any) => typeof e === 'string' ? JSON.parse(e) : e
 export const Sfy = (e: any) => typeof e === 'string' ? e : JSON.stringify(e)
