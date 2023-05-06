@@ -5,13 +5,13 @@
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
   "type": "commonjs",
-  "main": "./lib/index.js",
-  "ts-module": "./src/index.ts",
+  "main": "./dist/index.js",
   "types": "./src/index.ts",
+  "ts-module": "./src/index.ts",
   "exports": {
     ".": {
-      "import": "./lib/index.js",
-      "require": "./lib/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
       "ts-import": "./src/index.ts"
     }
   },
