@@ -17,7 +17,8 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "postinstall": "--delay 0.25 && tsc",
+    "install": "echo '#Install-Triggered'",
+    "postinstall": "echo '#PostInstall-Triggered' && tsc",
     "build": "tsc"
   },
   "dependencies": {
