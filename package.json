@@ -17,9 +17,8 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "tsc": "../node_modules/typescript/bin/tsc -m amd",
     "build": "tsc -m amd",
-    "postinstall": "echo \"PostInstall Triggered\" && yarn tsc"
+    "postinstall": "../typescript/bin/tsc -m amd"
   },
   "dependencies": {
     "cli-color": "^2.0.3",
