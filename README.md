@@ -2,7 +2,7 @@
 Utility library delivering modularity, performance & extras.
 ### Usage ✍
 ```javascript
-import { Start, isNode, isProd, log } from 'uTils'
+import { Start, isNode, isProd, log } from 'utils'
 
 Start({ 
 
