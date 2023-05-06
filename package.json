@@ -18,7 +18,7 @@
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
     "build": "echo Compile-uTils && tsc",
-    "preinstall": "yarn build"
+    "preinstall": "echo PreCompile-uTils && tsc"
   },
   "dependencies": {
     "cli-color": "^2.0.3",
