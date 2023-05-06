@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "postinstall": "yarn install && yarn build",
+    "postinstall": "--delay 0.25 && tsc",
     "build": "tsc"
   },
   "dependencies": {
