@@ -17,10 +17,11 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
+    "tsc": "./node_modules/typescript/bin/tsc",
     "preinstall": "echo \"Preinstall triggered\"",
-    "postinstall": "echo \"PostInstall Triggered\" && yarn add . && tsc",
+    "postinstall": "echo \"PostInstall Triggered\" && yarn tsc",
     "postprepare": "echo \"PostPrepare triggered\"",
-    "build": "tsc"
+    "build": "yarn tsc"
   },
   "dependencies": {
     "cli-color": "^2.0.3",
