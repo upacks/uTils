@@ -5,6 +5,7 @@
   "repository": "git@github.com:upacks/uTils.git",
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
     "build": "echo Compile-uTils && tsc"
