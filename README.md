@@ -1,6 +1,6 @@
 ### Hello 👋
 Utility library delivering modularity, performance & extras.
-## Usage ✍
+### Usage ✍
 ```javascript
 import { Start, isNode, isProd, log } from 'uTils'
 
