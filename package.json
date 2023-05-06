@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "compile": "echo Compile-uTils && tsc"
+    "build": "echo Compile-uTils && tsc"
   },
   "dependencies": {
     "cli-color": "^2.0.3",
