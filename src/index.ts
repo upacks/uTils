@@ -25,6 +25,8 @@ export const Exec = setImmediate
 export const Loop = setInterval
 export const Delay = setTimeout
 
+try { const ___ = require('./log') } catch (err) { log.error(`Require doesn't support!`) }
+
 /** Executes callback in safe-mode */
 export const Safe = () => {
 
