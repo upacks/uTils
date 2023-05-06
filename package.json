@@ -1,12 +1,18 @@
 {
   "name": "utils",
   "version": "1.0.0",
-  "main": "./lib/index.js",
-  "ts-module": "./src/index.ts",
   "repository": "git@github.com:upacks/uTils.git",
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
   "type": "commonjs",
+  "main": "./lib/index.js",
+  "ts-module": "./src/index.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "ts-import": "./src/index.ts"
+    }
+  },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
     "dev": "ts-node --esm ./src/index.ts",
