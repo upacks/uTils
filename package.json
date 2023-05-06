@@ -18,9 +18,9 @@
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
     "tsc": "./node_modules/typescript/bin/tsc",
-    "preinstall": "echo \"Preinstall triggered\" && yarn install",
-    "postinstall": "echo \"PostInstall Triggered\" && yarn tsc",
-    "build": "yarn tsc"
+    "build": "yarn tsc",
+    "preinstall": "echo \"Preinstall triggered\" && yarn tsc",
+    "postinstall": "echo \"PostInstall Triggered\" && yarn tsc"
   },
   "dependencies": {
     "cli-color": "^2.0.3",
