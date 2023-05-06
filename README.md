@@ -1,4 +1,4 @@
-## Usage/Examples
+## 👋 Usage/Examples
 
 ```javascript
 import { Start, isNode, isProd, log } from 'uTils'
