@@ -2,9 +2,6 @@
    "compilerOptions": {
       "module": "CommonJS",
       "target": "ES6",
-      "lib": [
-         "ES6"
-      ],
       "allowSyntheticDefaultImports": true,
       "moduleResolution": "node",
       "esModuleInterop": true,
@@ -13,11 +10,11 @@
       "outDir": "dist",
       "baseUrl": "./src"
    },
-   "ts-node": {
+   /* "ts-node": {
       "files": true,
       "esm": true,
       "experimentalSpecifierResolution": "node"
-   },
+   }, */
    "include": [
       "**/*.ts",
       "**/*.tsx"
