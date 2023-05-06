@@ -7,8 +7,10 @@
   "type": "commonjs",
   "main": "./lib/index.js",
   "ts-module": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
+      "import": "./lib/index.js",
       "require": "./lib/index.js",
       "ts-import": "./src/index.ts"
     }
