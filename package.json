@@ -17,9 +17,8 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "build": "yarn tsc",
-    "preinstall": "echo \"Preinstall triggered\" && yarn tsc",
+    "tsc": "../node_modules/typescript/bin/tsc -m amd",
+    "build": "tsc -m amd",
     "postinstall": "echo \"PostInstall Triggered\" && yarn tsc"
   },
   "dependencies": {
