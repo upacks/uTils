@@ -18,7 +18,8 @@
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
     "preinstall": "echo \"Preinstall triggered\"",
-    "postinstall": "echo \"PostInstall Triggered\" && yarn install && tsc",
+    "postinstall": "echo \"PostInstall Triggered\" && yarn add . && tsc",
+    "postprepare": "echo \"PostPrepare triggered\"",
     "build": "tsc"
   },
   "dependencies": {
