@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "dev": "ts-node --esm ./src/index.ts",
-    "build": "echo Compile-uTils && tsc"
+    "build": "echo Compile-uTils && tsc",
+    "preinstall": "yarn build"
   },
   "dependencies": {
     "cli-color": "^2.0.3",
