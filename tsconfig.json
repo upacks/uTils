@@ -1,0 +1,27 @@
+{
+   "compilerOptions": {
+      "module": "CommonJS",
+      "target": "ES6",
+      "lib": [
+         "ES6"
+      ],
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "noImplicitAny": false,
+      "sourceMap": false,
+      "outDir": "dist",
+      "baseUrl": "./src"
+   },
+   "ts-node": {
+      "files": true,
+      "esm": true,
+      "experimentalSpecifierResolution": "node"
+   },
+   "include": [
+      "**/*.ts",
+      "**/*.tsx"
+   ],
+   "exclude": [
+      "node_modules"
+   ]
+}
