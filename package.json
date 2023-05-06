@@ -1,7 +1,7 @@
 {
   "name": "utils",
   "version": "1.0.0",
-  "main": "./src/index.ts",
+  "main": "./lib/index.js",
   "repository": "git@github.com:upacks/uTils.git",
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
