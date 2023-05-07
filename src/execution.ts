@@ -2,15 +2,40 @@ import blocked from 'blocked'
 import { log, isNode, Exec } from './utils'
 
 /** Executes callback in safe-mode */
-export const Safe = () => {
+export const Safe = (cb) => {
 
-    return (cb) => {
+    try {
+
+        if (cb.constructor.name === "AsyncFunction") {
+
+            cb().then(e => { }).catch(err => log.error(`Safe Mode: ${err.message}`))
+            return false
+
+        } else {
+
+            cb()
+            return true
+
+        }
+
+    } catch (err) {
+
+        log.error(`Safe Mode: ${err.message}`)
+        return false
+
+    }
+}
+
+/** Executes callback in safe-mode after Immediate call */
+export const Late = (cb) => {
+
+    Exec(() => {
 
         try {
 
             if (cb.constructor.name === "AsyncFunction") {
 
-                cb().then(e => { }).catch(err => log.error(`Safe Mode: ${err.message}`))
+                cb().then(e => { }).catch(err => log.error(`Safe Mode (Late): ${err.message}`))
                 return false
 
             } else {
@@ -22,45 +47,12 @@ export const Safe = () => {
 
         } catch (err) {
 
-            log.error(`Safe Mode: ${err.message}`)
+            log.error(`Safe Mode (Late): ${err.message}`)
             return false
 
         }
-    }
 
-}
-
-/** Executes callback in safe-mode after Immediate call */
-export const Late = () => {
-
-    return (cb) => {
-
-        Exec(() => {
-
-            try {
-
-                if (cb.constructor.name === "AsyncFunction") {
-
-                    cb().then(e => { }).catch(err => log.error(`Safe Mode (Late): ${err.message}`))
-                    return false
-
-                } else {
-
-                    cb()
-                    return true
-
-                }
-
-            } catch (err) {
-
-                log.error(`Safe Mode (Late): ${err.message}`)
-                return false
-
-            }
-
-        })
-
-    }
+    })
 
 }
 
