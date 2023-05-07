@@ -1,6 +1,6 @@
 {
   "name": "utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": "git@github.com:upacks/uTils.git",
   "author": "gantulga.khuyag@gmail.com",
   "license": "MIT",
@@ -25,6 +25,7 @@
     "cli-color": "^2.0.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "shelljs": "^0.8.5",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
