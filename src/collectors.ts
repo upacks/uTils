@@ -1,4 +1,4 @@
-import { Loop, Delay } from './utils'
+import { Delay, Loop } from './utils'
 
 /** Collect and Calls back when size reaches **/
 export class Stress {
@@ -80,5 +80,26 @@ export class Collect {
             delete this.store[time]
         }
     }
+
+}
+
+/** Triggers a call after N seconds **/
+export class Since {
+
+    last = 0
+    cb: any = null
+
+    constructor(timeout = 5000) {
+        Loop(() => {
+            if (this.last !== 0 && Date.now() - this.last > timeout && this.cb) {
+                this.last = 0
+                this.cb()
+            }
+        }, 250)
+    }
+
+    add = () => { this.last = this.last === 0 ? Date.now() : this.last }
+
+    call = (cb) => { this.cb = cb }
 
 }
