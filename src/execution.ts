@@ -66,27 +66,22 @@ export const Start = ({ onStart, onError, onExit }): void => {
     try {
 
         /** Check event loop health **/
-        blocked((ms: number) => {
-
-            log.warn(`Event-Loop is blocked for ${ms}.ms`)
-            if (ms > 99) { onError(`Event loop is blocked!`) }
-
-        }, { threshold: 10, interval: 100 })
+        blocked((ms: number) => { if (ms > 99) { onError(store, `Event-Loop is blocked for ${ms}.ms`) } }, { threshold: 10, interval: 100 })
 
         //so the program will not close instantly
         process.stdin.resume()
 
         const exitHandler = (options, exitCode) => {
 
-            if (options.cleanup) onExit()
+            if (options.cleanup) onExit(store, exitCode ?? 0)
             if (exitCode || exitCode === 0) log.warn(`Process [${process.pid}]: Exit code is ${exitCode}`)
             if (options.exit) process.exit()
 
         }
 
         /** Fatal error handler **/
-        process.on('uncaughtException', (err: Error) => onError(`Uncaught Exception: ${err.message}`))
-        process.on('unhandledRejection', (err: Error) => onError(`Unhandled Rejection: ${err.message}`))
+        process.on('uncaughtException', (err: Error) => onError(store, `Uncaught Exception: ${err.message}`))
+        process.on('unhandledRejection', (err: Error) => onError(store, `Unhandled Rejection: ${err.message}`))
 
         // do something when app is closing
         process.on('exit', exitHandler.bind(null, { cleanup: true }))
@@ -101,7 +96,7 @@ export const Start = ({ onStart, onError, onExit }): void => {
 
     } catch (err) {
 
-        onError(`While starting the process: ${err.message}`)
+        onError(store, `While starting the process: ${err.message}`)
 
     }
 
