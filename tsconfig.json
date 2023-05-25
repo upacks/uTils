@@ -8,7 +8,10 @@
       "noImplicitAny": false,
       "sourceMap": false,
       "outDir": "dist",
-      "baseUrl": "./src"
+      "baseUrl": "./src",
+      "typeRoots": [
+         "./node_modules/@types"
+      ]
    },
    "include": [
       "**/*.ts",
