@@ -57,7 +57,7 @@ export const Late = (cb) => {
 }
 
 /** Process health management */
-export const Start = ({ onStart, onError, onExit }): void => {
+export const Start = ({ onStart, onError, onExit }: any): void => {
 
     if (!isNode) return null
 
@@ -75,7 +75,13 @@ export const Start = ({ onStart, onError, onExit }): void => {
 
             if (options.cleanup) onExit(store, exitCode ?? 0)
             if (exitCode || exitCode === 0) log.warn(`Process [${process.pid}]: Exit code is ${exitCode}`)
-            if (options.exit) process.exit()
+            if (options.exit) {
+                if (typeof onExit === 'undefined') {
+                    process.exit()
+                } else {
+                    onExit(store, exitCode ?? 0)
+                }
+            }
 
         }
 
