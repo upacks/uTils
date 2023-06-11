@@ -30,9 +30,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "shelljs": "^0.8.5",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
+    "uuid": "^9.0.0",
     "@types/lodash": "^4.14.194",
     "@types/node": "^18.11.18",
     "@types/shelljs": "^0.8.12",
