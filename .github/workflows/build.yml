@@ -44,7 +44,9 @@ jobs:
           fi
         id: diff
 
-      - name: 🚀Upload
-        uses: softprops/action-gh-release@v1
+      # If index.js was different than expected, upload the expected version as an artifact
+      - name: 🚀Upload dist/*
+        uses: actions/upload-artifact@v3
         with:
-          files: dist/*
+          name: dist
+          path: dist/*
