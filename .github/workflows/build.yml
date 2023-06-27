@@ -31,7 +31,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -a -m "By GH-Actions"
+          git add .
+          git commit -m "By GH-Actions"
 
       - name: 🚀 Push packed js
         if: steps.commitPackedJs.outcome == 'success'
