@@ -17,12 +17,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: 🚀 xtract branch name
-        id: extractBranch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-
       - name: 🚀 Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -34,16 +28,8 @@ jobs:
       - name: 🚀 Build
         run: yarn build
 
-      - name: 🚀 Pack
-        run: yarn pack
-
-      - name: 🚀 Check packed js changes
-        id: packedJsStatus
-        run: echo ::set-output name=changes::$(git status ${{ env.PACKED_JS_PATH }} --porcelain)
-
       - name: 🚀 Commit packed js
         id: commitPackedJs
-        if: steps.packedJsStatus.outputs.changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -58,4 +44,3 @@ jobs:
           tags: true
           force: true
           branch: build
-          # branch: ${{ steps.extractBranch.outputs.branch }}
