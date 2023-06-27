@@ -13,7 +13,7 @@ permissions:
 jobs:
   buildPack:
     env:
-      PACKED_JS_PATH: "dist/index.js"
+      PACKED_JS_PATH: "dist"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
