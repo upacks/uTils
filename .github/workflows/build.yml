@@ -31,13 +31,19 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add ./dist
+
+          mkdir _dist
+          mv ./dist ./_dist
+          cp ./package.json ./_dist
+          cp ./yarn.lock ./_dist
+
+          git add ./_dist
           git commit -m "By GH-Actions"
 
       - name: 🚀 Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./_dist
           publish_branch: production-build
           force_orphan: true
