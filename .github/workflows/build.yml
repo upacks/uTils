@@ -3,7 +3,7 @@
 # `index.js` is the code that will run.
 # For our project, we generate this file through a build process from other source files.
 # We need to make sure the checked-in `index.js` actually matches what we expect it to be.
-name: Check dist/
+name: TS-Builder
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Rebuild the dist/ directory
+      - name: Build the dist/ directory
         run: |
           yarn build
 
@@ -46,7 +46,6 @@ jobs:
 
       # If index.js was different than expected, upload the expected version as an artifact
       - uses: actions/upload-artifact@v3
-        if: ${{ failure() && steps.diff.conclusion == 'failure' }}
         with:
           name: dist
           path: dist/
