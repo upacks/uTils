@@ -1,39 +1,45 @@
-# `dist/index.js` is a special file in Actions.
-# When you reference an action with `uses:` in a workflow,
-# `index.js` is the code that will run.
-# For our project, we generate this file through a build process from other source files.
-# We need to make sure the checked-in `index.js` actually matches what we expect it to be.
-name: TS-Builder
-
+name: "build-pack"
 on:
   push:
     branches:
-      - main
-    paths-ignore:
-      - "**.md"
-  pull_request:
-    paths-ignore:
-      - "**.md"
-  workflow_dispatch:
-
+      - "*"
 jobs:
-  check-dist:
+  buildPack:
+    env:
+      PACKED_JS_PATH: "dist/index.js"
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: 🚀 Set Node.js 16.x
-        uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v2
+      - name: 🚀 xtract branch name
+        id: extractBranch
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      - name: 🚀 Use Node.js
+        uses: actions/setup-node@v1
         with:
           node-version: 16.x
-
       - name: 🚀 Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: 🚀 Typescript build
+        run: npm install
+      - name: 🚀 Build
+        run: npm run build
+      - name: 🚀 Pack
+        run: npm run pack
+      - name: 🚀 Check packed js changes
+        id: packedJsStatus
+        run: echo ::set-output name=changes::$(git status ${{ env.PACKED_JS_PATH }} --porcelain)
+      - name: 🚀 Commit packed js
+        id: commitPackedJs
+        if: steps.packedJsStatus.outputs.changes
         run: |
-          yarn build
-          git add ./dist
-          git commit -m "🚀 Action-Build"
-          git push
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ${{ env.PACKED_JS_PATH }}
+          git commit -m "Pack with dependencies to ${{ env.PACKED_JS_PATH }}"
+      - name: 🚀 Push packed js
+        if: steps.commitPackedJs.outcome == 'success'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tags: true
+          force: true
+          branch: ${{ steps.extractBranch.outputs.branch }}
