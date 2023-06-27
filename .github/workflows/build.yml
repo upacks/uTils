@@ -1,4 +1,4 @@
-name: "build-pack"
+name: "TS-Builder"
 
 on:
   push:
@@ -12,8 +12,6 @@ permissions:
 
 jobs:
   buildPack:
-    env:
-      PACKED_JS_PATH: "dist"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,8 +31,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add ${{ env.PACKED_JS_PATH }}
-          git commit -m "Pack with dependencies to ${{ env.PACKED_JS_PATH }}"
+          git commit -a -m "By GH-Actions"
 
       - name: 🚀 Push packed js
         if: steps.commitPackedJs.outcome == 'success'
