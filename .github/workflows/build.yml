@@ -23,30 +23,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: 🚀Set Node.js 16.x
+      - name: 🚀 Set Node.js 16.x
         uses: actions/setup-node@v3.6.0
         with:
           node-version: 16.x
 
-      - name: 🚀Install dependencies
+      - name: 🚀 Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: 🚀Build the dist/ directory
+      - name: 🚀 Typescript build
         run: |
           yarn build
-
-      - name: 🚀Compare the expected and actual dist/ directories
-        run: |
-          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build.  See status below:"
-            git diff
-            exit 1
-          fi
-        id: diff
-
-      # If index.js was different than expected, upload the expected version as an artifact
-      - name: 🚀Upload dist/*
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
-          path: dist/*
+          git add ./dist
+          git commit -m "🚀 Action-Build"
+          git push
