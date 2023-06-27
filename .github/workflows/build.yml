@@ -1,8 +1,15 @@
 name: "build-pack"
+
 on:
   push:
     branches:
       - "*"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   buildPack:
     env:
@@ -10,23 +17,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
       - name: 🚀 xtract branch name
         id: extractBranch
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: 🚀 Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
+
       - name: 🚀 Install dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
+
       - name: 🚀 Build
-        run: npm run build
+        run: yarn build
+
       - name: 🚀 Pack
-        run: npm run pack
+        run: yarn pack
+
       - name: 🚀 Check packed js changes
         id: packedJsStatus
         run: echo ::set-output name=changes::$(git status ${{ env.PACKED_JS_PATH }} --porcelain)
+
       - name: 🚀 Commit packed js
         id: commitPackedJs
         if: steps.packedJsStatus.outputs.changes
@@ -35,6 +49,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add ${{ env.PACKED_JS_PATH }}
           git commit -m "Pack with dependencies to ${{ env.PACKED_JS_PATH }}"
+
       - name: 🚀 Push packed js
         if: steps.commitPackedJs.outcome == 'success'
         uses: ad-m/github-push-action@master
