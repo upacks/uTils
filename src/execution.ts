@@ -1,5 +1,6 @@
 import blocked from 'blocked'
-import { log, isNode, Exec } from './utils'
+import { isNode, Exec } from './utils'
+import { log } from './log'
 
 /** Executes callback in safe-mode */
 export const Safe = (cb) => {
@@ -56,6 +57,51 @@ export const Late = (cb) => {
 
 }
 
+export const Run = ({ onStart, onError, onExit }: any): void => {
+
+    const alias = `PID_${process.pid}`
+    const store: any = {}
+    let isExitCalled = false
+
+    try {
+
+        /** 1. Event loop health **/
+        blocked((ms: number) => { onError(store, `Event-Loop is blocked for ${ms}.ms`) }, { threshold: 99, interval: 100 })
+
+
+        /** 2. Exit handler **/
+        process.stdin.resume()
+
+        const exitHandler = (options, exitCode) => {
+
+            if (!isExitCalled) { console.log(''); isExitCalled = true; }
+            if (options.cleanup && typeof onExit !== 'undefined') { log.warn(`${alias}: Cleaning up before process exits`) && onExit(store, exitCode) }
+            if (exitCode) { log.warn(`${alias}: About to exit with "${exitCode}"`) }
+            if (exitCode === 0) { log.warn(`${alias}: Bye"\n`) }
+            if (options.exit) { process.exit(0) }
+
+        }
+
+        process.on('uncaughtException', (err: Error) => onError(store, `${alias}: Uncaught Exception / ${err.message}`))
+        process.on('unhandledRejection', (err: Error) => onError(store, `${alias}: Unhandled Rejection / ${err.message}`))
+        process.on('SIGTERM', exitHandler.bind(null, { exit: true }))
+        process.on('SIGINT', exitHandler.bind(null, { exit: true }))
+        process.on('SIGUSR1', exitHandler.bind(null, { exit: true }))
+        process.on('SIGUSR2', exitHandler.bind(null, { exit: true }))
+        process.on('exit', exitHandler.bind(null, { cleanup: true }))
+
+        /** 3. Execute onStart **/
+        onStart(store)
+
+
+    } catch (err) {
+
+        onError(store, `${alias}: ${err.message}`)
+
+    }
+
+}
+
 /** Process health management */
 export const Start = ({ onStart, onError, onExit }: any): void => {
 
@@ -73,15 +119,14 @@ export const Start = ({ onStart, onError, onExit }: any): void => {
 
         const exitHandler = (options, exitCode) => {
 
-            if (options.cleanup) onExit(store, exitCode ?? 0)
-            if (exitCode || exitCode === 0) log.warn(`Process [${process.pid}]: Exit code is ${exitCode}`)
-            if (options.exit) {
-                if (typeof onExit === 'undefined') {
-                    process.exit()
-                } else {
-                    onExit(store, exitCode ?? 0)
-                }
+            if (options.cleanup && typeof onExit !== 'undefined') {
+                log.warn(`Process [${process.pid}]: Cleaning up before process exits`)
+                onExit(store, exitCode ?? 0)
+                    .then(() => { process.exit(exitCode ?? 0) })
+                    .catch((err) => { log.error(`Process [${process.pid}]: While exiting / ${err.message}`) })
             }
+            if (exitCode || exitCode === 0) { log.warn(`Process [${process.pid}]: About to exit with "${exitCode}"`) }
+            if (options.exit) { process.exit(0) }
 
         }
 

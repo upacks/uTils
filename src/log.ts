@@ -25,22 +25,29 @@ const js = (level: string, message: string) => {
 
 }
 
+const blog = (type, txt) => {
+
+    console[type](txt)
+    return true
+
+}
+
 export const log = isProd ? {
 
-    req: (message: string) => console.log(js('info', message)),
-    res: (message: string) => console.log(js('info', message)),
-    success: (message: string) => console.log(js('info', message)),
-    info: (message: string) => console.log(js('info', message)),
-    warn: (message: string) => console.warn(js('warn', message)),
-    error: (message: string) => console.error(js('error', message)),
+    req: (message: string) => blog('log', js('info', message)),
+    res: (message: string) => blog('log', js('info', message)),
+    success: (message: string) => blog('log', js('info', message)),
+    info: (message: string) => blog('log', js('info', message)),
+    warn: (message: string) => blog('warn', js('warn', message)),
+    error: (message: string) => blog('error', js('error', message)),
 
 } : {
 
-    req: (message: string) => console.log(cl.blue(` ⇠ ${message}`)),
-    res: (message: string) => console.log(cl.blue(` ⇢ ${message}`)),
-    success: (message: string) => console.log(cl.green(` ✩ ${message}`)),
-    info: (message: string) => console.log(cl.blue(` ✔ ${message}`)),
-    warn: (message: string) => console.log(cl.yellow(` ! ${message}`)),
-    error: (message: string) => console.log(cl.red(` ✗ ${message}`)),
+    req: (message: string) => blog('log', cl.blue(` ⇠ ${message}`)),
+    res: (message: string) => blog('log', cl.blue(` ⇢ ${message}`)),
+    success: (message: string) => blog('log', cl.green(` ✩ ${message}`)),
+    info: (message: string) => blog('log', cl.blue(` ✔ ${message}`)),
+    warn: (message: string) => blog('log', cl.yellow(` ! ${message}`)),
+    error: (message: string) => blog('log', cl.red(` ✗ ${message}`)),
 
 }
