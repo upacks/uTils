@@ -10,9 +10,9 @@ export const dateFormat: string = "YYYY-MM-DD HH:mm:ss.SSS"
 // export const lodash: lodashi.LoDashStatic = lodashi
 export const moment = momenti
 
-export const Exec = setImmediate
 export const Loop = setInterval
 export const Delay = setTimeout
+export const Exec = (cb) => Delay(() => cb(), 0)
 export const Uid = (): string => uuidv4()
 
 /**
