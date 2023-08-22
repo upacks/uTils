@@ -10,11 +10,13 @@
   "ts-module": "./dist/index.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "ts-import": "./src/index.ts"
     },
     "./web": {
+      "types": "./dist/web/index.d.ts",
       "import": "./dist/web/index.js",
       "require": "./dist/web/index.js",
       "ts-import": "./src/web/index.ts"
@@ -22,7 +24,7 @@
   },
   "scripts": {
     "start": "nodemon --delay 0.25 ./src/index.ts",
-    "web": "nodemon --delay 0.25 ./src/web/index.ts",
+    "web": "nodemon --delay 0.25 ./src/web/index.ts --debug",
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
