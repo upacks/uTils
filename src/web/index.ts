@@ -1,3 +1,6 @@
+export * from './collectors'
+export * from './execution'
+export * from './utils'
 export * from './log'
 
 export const help = () => {
@@ -11,6 +14,12 @@ export const help = () => {
 
         log.req(`log.req('***')`)
         log.res(`log.res('***')`)
+
+    })
+
+    import('./utils').then(({ Now }) => {
+
+        console.log(Now())
 
     })
 
