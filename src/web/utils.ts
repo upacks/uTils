@@ -15,8 +15,8 @@ export const Delay = setTimeout
 export const Exec = (cb) => Delay(() => cb(), 0)
 export const Uid = (): string => uuidv4()
 
-export const Win = typeof window === 'undefined' ? {} : window
-export const Doc = typeof document === 'undefined' ? {} : document
+export const Win: Window | any = typeof window === 'undefined' ? {} : window
+export const Doc: Document | any = typeof document === 'undefined' ? {} : document
 
 /**
  * @returns "YYYY-MM-DD HH:mm:ss.SSS"
