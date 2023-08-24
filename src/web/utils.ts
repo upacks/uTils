@@ -15,6 +15,9 @@ export const Delay = setTimeout
 export const Exec = (cb) => Delay(() => cb(), 0)
 export const Uid = (): string => uuidv4()
 
+export const Win = typeof window === 'undefined' ? {} : window
+export const Doc = typeof document === 'undefined' ? {} : document
+
 /**
  * @returns "YYYY-MM-DD HH:mm:ss.SSS"
  */
@@ -64,5 +67,30 @@ export const SyncWait = (ms: number) => {
 
     let start = Date.now(), now = start
     while (now - start < ms) { now = Date.now() }
+
+}
+
+/**
+ * Sync LocalStorage 
+ * @param key 
+ * @param value 
+ * @returns 
+ */
+export const KeyValue = (key: string, value: string = ''): string => {
+
+    try {
+
+        if (key && value) {
+            localStorage.setItem(key, value)
+            return localStorage.getItem(key)
+        }
+
+        if (key && value === '') {
+            return localStorage.getItem(key)
+        }
+
+    } catch (error) { }
+
+    return ''
 
 }
