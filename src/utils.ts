@@ -64,3 +64,29 @@ export const SyncWait = (ms: number) => {
     let start = Date.now(), now = start
     while (now - start < ms) { now = Date.now() }
 }
+
+/**
+ * Encodes Object according to KEY
+ * @param _env 
+ * @param key 
+ * @returns 
+ */
+export const encodeENV = (_env: any = {}, key: string = 'u_') => {
+    const encode: any = {}
+    for (const x in _env)
+        encode[`u_${x}`] = _env[x]
+    return encode
+}
+
+/**
+ * Decodes ENV from Process.ENV
+ * @param key Starts String
+ * @returns 
+ */
+export const decodeENV = (key: string = 'u_') => {
+    const decode: any = {}
+    for (const x in env)
+        if (x.indexOf(key) === 0)
+            decode[x.replace(key, '')] = env[x]?.indexOf(',') !== -1 ? env[x]?.split(',') : env[x]
+    return decode
+}
