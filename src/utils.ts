@@ -66,7 +66,7 @@ export const SyncWait = (ms: number) => {
 }
 
 /**
- * Encodes Object according to KEY
+ * Encodes ENV
  * @param _env 
  * @param key 
  * @returns 
