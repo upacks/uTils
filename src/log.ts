@@ -51,3 +51,54 @@ export const log = isProd ? {
     error: (message: string) => blog('log', cl.red(` ✗ ${message}`)),
 
 }
+
+/** To solve the log spam **/
+
+export class Log {
+
+    kv = {}
+    alias
+    delay
+
+    constructor(alias: string = 'Default', delay: number = 2500) {
+
+        this.alias = alias
+        this.delay = delay
+
+    }
+
+    can = (type: string) => {
+
+        if (this.kv.hasOwnProperty(type) /** O(1) **/) {
+
+            if ((Date.now() - this.kv[type]) > this.delay) {
+
+                this.kv[type] = Date.now()
+                return true
+
+            } else {
+                return false
+            }
+
+        } else {
+
+            this.kv[type] = Date.now()
+            return true
+
+        }
+
+    }
+
+    success = (type: string, message: string) => this.can(type) && console.log(cl.green(` ✩ ${message}`))
+
+    info = (type: string, message: string) => this.can(type) && console.log(cl.blue(` ✔ ${message}`))
+
+    warn = (type: string, message: string) => this.can(type) && console.log(cl.yellow(` ! ${message}`))
+
+    req = (type: string, message: string) => this.can(type) && console.log(cl.blue(` ⇠ ${message}`))
+
+    res = (type: string, message: string) => this.can(type) && console.log(cl.blue(` ⇢ ${message}`))
+
+    error = (type: string, message: string) => this.can(type) && console.log(cl.red(` ✗ ${message}`))
+
+}
