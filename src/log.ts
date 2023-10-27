@@ -56,18 +56,18 @@ export const log = isProd ? {
 
 export class Log {
 
-    kv = {}
-    alias
-    delay
+    private kv = {}
+    private alias
+    private delay
 
-    constructor(alias: string = 'Default', delay: number = 2500) {
+    constructor(alias: string = '', delay: number = 2500) {
 
         this.alias = alias
         this.delay = delay
 
     }
 
-    can = (type: string) => {
+    private can = (type: string) => {
 
         if (this.kv.hasOwnProperty(type) /** O(1) **/) {
 
@@ -89,16 +89,46 @@ export class Log {
 
     }
 
-    success = (type: string, message: string) => this.can(type) && console.log(cl.green(` ✩ ${message}`))
+    success = (message: string, group: string = '-'): boolean => {
 
-    info = (type: string, message: string) => this.can(type) && console.log(cl.blue(` ✔ ${message}`))
+        this.can(group) && console.log(cl.green(` ✩ [${this.alias}] ${message}`))
+        return true
 
-    warn = (type: string, message: string) => this.can(type) && console.log(cl.yellow(` ! ${message}`))
+    }
 
-    req = (type: string, message: string) => this.can(type) && console.log(cl.blue(` ⇠ ${message}`))
+    info = (message: string, group: string = '-'): boolean => {
 
-    res = (type: string, message: string) => this.can(type) && console.log(cl.blue(` ⇢ ${message}`))
+        this.can(group) && console.log(` ✔ [${this.alias}] ${message}`)
+        return true
 
-    error = (type: string, message: string) => this.can(type) && console.log(cl.red(` ✗ ${message}`))
+    }
+
+    req = (message: string, group: string = '-'): boolean => {
+
+        this.can(group) && console.log(cl.blue(` ⇠ [${this.alias}] ${message}`))
+        return true
+
+    }
+
+    res = (message: string, group: string = '-'): boolean => {
+
+        this.can(group) && console.log(cl.blue(` ⇢ [${this.alias}] ${message}`))
+        return true
+
+    }
+
+    warn = (message: string, group: string = '-'): boolean => {
+
+        this.can(group) && console.log(cl.yellow(` ! [${this.alias}] ${message}`))
+        return true
+
+    }
+
+    error = (message: string, group: string = '-'): boolean => {
+
+        this.can(group) && console.log(cl.red(` ✗ [${this.alias}] ${message}`))
+        return true
+
+    }
 
 }
