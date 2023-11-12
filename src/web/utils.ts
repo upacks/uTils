@@ -76,21 +76,34 @@ export const SyncWait = (ms: number) => {
  * @param value 
  * @returns 
  */
-export const KeyValue = (key: string, value: string = ''): string => {
+export const KeyValue = (key: string, value: any): string => {
 
     try {
 
-        if (key && value) {
+        if (key) {
+
+            if (typeof value === "string") {
+
+                localStorage.setItem(key, value)
+                return localStorage.getItem(key)
+
+            } else {
+
+                return localStorage.getItem(key)
+
+            }
+
+        } else { return '' }
+
+        /* if (key && value) {
             localStorage.setItem(key, value)
             return localStorage.getItem(key)
         }
 
         if (key && value === '') {
             return localStorage.getItem(key)
-        }
+        } */
 
-    } catch (error) { }
-
-    return ''
+    } catch { return '' }
 
 }
