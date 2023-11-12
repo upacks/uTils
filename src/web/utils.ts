@@ -76,7 +76,7 @@ export const SyncWait = (ms: number) => {
  * @param value 
  * @returns 
  */
-export const KeyValue = (key: string, value: any): string => {
+export const KeyValue = (key: string, value: any = undefined): string => {
 
     try {
 
