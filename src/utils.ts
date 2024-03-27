@@ -90,3 +90,18 @@ export const decodeENV = (key: string = 'u_') => {
             decode[x.replace(key, '')] = env[x]?.indexOf(',') !== -1 ? env[x]?.split(',') : env[x]
     return decode
 }
+
+/**
+ * JWT to JSON only works on NodeJS
+ * @param token
+ * @returns 
+ */
+export const parseJwt = (token: string) => {
+
+    try {
+
+        return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+
+    } catch (err) { return null }
+
+}
